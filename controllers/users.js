@@ -23,13 +23,7 @@ const usersPost = async(req, res = response) => {
     const { nombre, correo, password, rol } = req.body
     const user = new User({ nombre, correo, password, rol });
 
-    // Verificar si el correo existe
-    const existeEmail = await User.findOne({ correo });
-    if ( existeEmail ) {
-        return res.status(400).json({
-            msg: 'Ese correo ya esta registrado'
-        })
-    }
+    
 
     // Encriptar la contraseña
     const salt = bcryptjs.genSaltSync();
@@ -38,7 +32,6 @@ const usersPost = async(req, res = response) => {
     // Guardar en BD
 
     await user.save()
-    delete user.password;
 
     res.json({
         user

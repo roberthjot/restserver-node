@@ -10,6 +10,8 @@ class Server {
         this.port = process.env.PORT
         this.userPatch = '/api/users'
 
+        this.authPatch = '/api/auth'
+
         // Conectar a base de datos
         this.conectarDB()
 
@@ -39,6 +41,7 @@ class Server {
 
     routes() {
        
+        this.app.use( this.authPatch, require('../routes/auth'))
         this.app.use( this.userPatch, require('../routes/user'))
 
     }
